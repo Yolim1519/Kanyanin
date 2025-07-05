@@ -1,11 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ระบบจัดการสินค้า</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f1f5f9, #e2e8f0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #1f2937;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 1px #ccc;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      background-color: #2563eb;
+      transform: scale(1.05);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+  </style>
 </head>
 <body>
+
   <h1>ระบบจัดการสินค้า</h1>
-  <button onclick="location.href='add.html'">เพิ่มสินค้า</button>
-  <button onclick="location.href='search.html'">ค้นหาสินค้า</button>
+
+  <div class="button-container">
+    <button onclick="location.href='add.html'">➕ เพิ่มสินค้า</button>
+    <button onclick="location.href='search.html'">🔍 ค้นหาสินค้า</button>
+  </div>
+
+  <footer>© 2025 ระบบจัดการสินค้าออนไลน์</footer>
+
 </body>
 </html>
