@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>เพิ่มสินค้า</title>
+</head>
+<body>
+  <h1>เพิ่มข้อมูลสินค้า</h1>
+  <form id="productForm">
+    <label>ประเภทสินค้า:</label><br>
+    <input type="text" name="type"><br>
+
+    <label>ชื่อสินค้า:</label><br>
+    <input type="text" name="name"><br>
+
+    <label>รหัสบาร์โค้ด:</label><br>
+    <input type="text" name="barcode"><br>
+
+    <label>ราคา:</label><br>
+    <input type="text" name="price"><br>
+
+    <label>รูปภาพ URL:</label><br>
+    <input type="text" name="image"><br><br>
+
+    <button type="submit">เพิ่มสินค้า</button>
+  </form>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxOGmK7yiVBPRh81GN4DFN9jKZXvqkAyhIv-67HmF61V2OAjYbyGpXVbAzA4wRPeOjmOg/exec';
+
+    document.getElementById('productForm').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        "ประเภทสินค้า": form.type.value,
+        "ชื่อสินค้า": form.name.value,
+        "รหัสบาร์โค้ด": form.barcode.value,
+        "ราคา": form.price.value,
+        "รูปภาพ": form.image.value
+      };
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        alert('เพิ่มสินค้าสำเร็จ!');
+        form.reset();
+      })
+      .catch(err => alert('เกิดข้อผิดพลาด'));
+    });
+  </script>
+</body>
+</html>
