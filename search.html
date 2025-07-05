@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ค้นหาสินค้า</title>
+  <script src="https://unpkg.com/@zxing/library@latest"></script>
+</head>
+<body>
+  <h1>ค้นหาสินค้า</h1>
+
+  <input type="text" id="searchInput" placeholder="กรอกชื่อหรือรหัสบาร์โค้ด">
+  <button onclick="search()">ค้นหา</button>
+
+  <button onclick="startScanner()">📷 สแกนบาร์โค้ด</button><br><br>
+
+  <video id="video" width="300" height="200" style="display:none;"></video>
+
+  <div id="result"></div>
+
+  <script>
+    const sheetURL = 'https://script.google.com/macros/s/AKfycbxOGmK7yiVBPRh81GN4DFN9jKZXvqkAyhIv-67HmF61V2OAjYbyGpXVbAzA4wRPeOjmOg/exec';
+
+    async function search() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const res = await fetch(sheetURL);
+      const data = await res.json();
+
+      const found = data.find(item =>
+        item['ชื่อสินค้า'].toLowerCase().includes(query) ||
+        item['รหัสบาร์โค้ด'] === query
+      );
+
+      const resultDiv = document.getElementById('result');
+      if (found) {
+        resultDiv.innerHTML = `
+          <h3>${found['ชื่อสินค้า']}</h3>
+          <p>ประเภท: ${found['ประเภทสินค้า']}</p>
+          <p>ราคา: ${found['ราคา']} บาท</p>
+          <img src="${found['รูปภาพ']}" width="150">
+        `;
+      } else {
+        resultDiv.innerHTML = 'ไม่พบสินค้า';
+      }
+    }
+
+    async function startScanner() {
+      const codeReader = new ZXing.BrowserBarcodeReader();
+      document.getElementById('video').style.display = 'block';
+      try {
+        const result = await codeReader.decodeOnceFromVideoDevice(undefined, 'video');
+        document.getElementById('searchInput').value = result.text;
+        search();
+        codeReader.reset();
+        document.getElementById('video').style.display = 'none';
+      } catch (err) {
+        alert('ไม่สามารถสแกนได้');
+      }
+    }
+  </script>
+</body>
+</html>
